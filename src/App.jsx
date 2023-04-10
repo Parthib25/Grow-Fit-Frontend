@@ -29,6 +29,16 @@ function App() {
       }
     }
   }, []);
+   useEffect(() => {
+    // prompt user to allow insecure content
+    const allowInsecureContent = localStorage.getItem('allowInsecureContent');
+    if (!allowInsecureContent) {
+      const result = window.prompt('This website contains insecure content. Do you want to allow it?', 'yes');
+      if (result === 'yes') {
+        localStorage.setItem('allowInsecureContent', true);
+      }
+    }
+  }, []);
   const handleLogin = (user) => {
     setIsLoggedIn(true);
     setUser(user)
@@ -52,8 +62,6 @@ function App() {
     <UserContext.Provider value={user}>
     <div className="App">
 
-      {/*<Signup/>
-      <Signin history={history}/>*/}
       <Routes>
       <Route exact path="/" element={<Homepage/>} />
       <Route path="/homepage" element={<Homepage/>} />
@@ -64,8 +72,6 @@ function App() {
       <Route path="/grievance" element={<GrievanceForm/>}/>
       
       </Routes>
-    {/* 
-  <Homepage/>*/}
 
     </div>
     </UserContext.Provider>
